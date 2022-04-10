@@ -20,8 +20,7 @@
  *
  */
 #pragma once
-#error "Don't build with import-2.0.x configurations!"
-#error "Use the 'bugfix...' or 'release...' configurations matching your Marlin version."
+#define CONFIG_EXAMPLES_DIR "FYSETC/S6"
 
 /**
  * Configuration.h
@@ -98,7 +97,7 @@
 
 // Choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_RAMPS_14_EFB
+  #define MOTHERBOARD BOARD_FYSETC_S6
 #endif
 
 /**
@@ -109,7 +108,7 @@
  *
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-#define SERIAL_PORT 0
+#define SERIAL_PORT -1
 
 /**
  * Serial Port Baud Rate
@@ -122,7 +121,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 250000
+#define BAUDRATE 115200
 //#define BAUD_RATE_GCODE     // Enable G-code M575 to set the baud rate
 
 /**
@@ -168,21 +167,17 @@
 //#define NUM_AXES 3
 
 /**
- * Additional Axis Settings
- *
- * Define AXISn_ROTATES for all axes that rotate or pivot.
- * Rotational axis coordinates are expressed in degrees.
- *
- * AXISn_NAME defines the letter used to refer to the axis in (most) G-code commands.
- * By convention the names and roles are typically:
- *   'A' : Rotational axis parallel to X
- *   'B' : Rotational axis parallel to Y
- *   'C' : Rotational axis parallel to Z
- *   'U' : Secondary linear axis parallel to X
- *   'V' : Secondary linear axis parallel to Y
- *   'W' : Secondary linear axis parallel to Z
- *
- * Regardless of these settings the axes are internally named I, J, K, U, V, W.
+ * Axis codes for additional axes:
+ * This defines the axis code that is used in G-code commands to
+ * reference a specific axis.
+ * 'A' for rotational axis parallel to X
+ * 'B' for rotational axis parallel to Y
+ * 'C' for rotational axis parallel to Z
+ * 'U' for secondary linear axis parallel to X
+ * 'V' for secondary linear axis parallel to Y
+ * 'W' for secondary linear axis parallel to Z
+ * Regardless of the settings, firmware-internal axis IDs are
+ * I (AXIS4), J (AXIS5), K (AXIS6).
  */
 #if NUM_AXES >= 4
   #define AXIS4_NAME 'A' // :['A', 'B', 'C', 'U', 'V', 'W']
@@ -610,7 +605,6 @@
 //===========================================================================
 //============================= PID Settings ================================
 //===========================================================================
-
 // Enable PIDTEMP for PID control or MPCTEMP for Predictive Model.
 // temperature control. Disable both for bang-bang heating.
 #define PIDTEMP          // See the PID Tuning Guide at https://reprap.org/wiki/PID_Tuning
@@ -1030,7 +1024,7 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 500 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 400 }
 
 /**
  * Default Max Feed Rate (linear=mm/s, rotational=°/s)
@@ -1975,7 +1969,7 @@
  *   M501 - Read settings from EEPROM. (i.e., Throw away unsaved changes)
  *   M502 - Revert settings to "factory" defaults. (Follow with M500 to init the EEPROM.)
  */
-//#define EEPROM_SETTINGS     // Persistent storage with M500 and M501
+#define EEPROM_SETTINGS       // Persistent storage with M500 and M501
 //#define DISABLE_M503        // Saves ~2700 bytes of flash. Disable for release!
 #define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save PROGMEM.
 #define EEPROM_BOOT_SILENT    // Keep M503 quiet and only give errors during first load
@@ -2248,7 +2242,7 @@
  * SD Card support is disabled by default. If your controller has an SD slot,
  * you must uncomment the following option or it won't work.
  */
-//#define SDSUPPORT
+#define SDSUPPORT
 
 /**
  * SD CARD: ENABLE CRC

@@ -20,8 +20,7 @@
  *
  */
 #pragma once
-#error "Don't build with import-2.0.x configurations!"
-#error "Use the 'bugfix...' or 'release...' configurations matching your Marlin version."
+#define CONFIG_EXAMPLES_DIR "delta/generic"
 
 /**
  * Configuration.h
